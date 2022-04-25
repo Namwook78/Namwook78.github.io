@@ -1,0 +1,114 @@
+{% assign sum = site.posts | size %}
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">{{ site.data.ui-text[site.locale].menu_label }}</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <li>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">{{sum}}</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </li>
+      <li>
+        <span class="nav__sub-title">FrontEnd</span>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "js"%}
+                    <li><a href="/categories/js" class="">JS ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "ts"%}
+                    <li><a href="/categories/ts" class="">TypeScript ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "react"%}
+                    <li><a href="/categories/react" class="">React ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "nextjs"%}
+                    <li><a href="/categories/nextjs" class="">NextJS ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "web"%}
+                    <li><a href="/categories/web" class="">Web ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "webpack" %}
+                        <li><a href="/categories/webpack" class="">Webpack ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        <span class="nav__sub-title">Algorithm</span>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "base" %}
+                        <li><a href="/categories/base" class="">Base ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "boj" %}
+                        <li><a href="/categories/boj" class="">BOJ ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "programers" %}
+                        <li><a href="/categories/programers" class="">Programers ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        <span class="nav__sub-title">Project</span>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "todo" %}
+                        <li><a href="/categories/todo" class="">React Todo({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        <span class="nav__sub-title">books</span>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "deep_dive" %}
+                        <li><a href="/categories/deep_dive" class="">JS deep-dive ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        
+        <!-- <span class="nav__sub-title">TIL</span>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "oct2021" %}
+                        <li><a href="/categories/202110" class="">202110 ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "dec2021" %}
+                        <li><a href="/categories/202111" class="">202111 ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul> -->
+      </li>
+      <li>	
+           <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Flhk3337.github.io&count_bg=%23355C7D&title_bg=%23F67280&icon=&icon_color=%23E7E7E7&title=Visitor&edge_flat=false"/>
+      </li>
+  </ul>
+</nav>
+
