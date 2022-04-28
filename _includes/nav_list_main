@@ -96,23 +96,7 @@
                     <li><a href="/categories/oracle" class="">oracle ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
-            </ul>
-        <span class="nav__sub-title">oracle</span>
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "oracle"%}
-                    <li><a href="/categories/oracle" class="">oracle ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-        <span class="nav__sub-title">oracle</span>
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "oracle"%}
-                    <li><a href="/categories/oracle" class="">oracle ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>    
+            </ul> 
         <!-- <span class="nav__sub-title">TIL</span>
             <ul>
                 {% for category in site.categories %}
