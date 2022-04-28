@@ -1,5 +1,5 @@
 ---
-title: "test"
+title: "oracle 설치 및 db 작성법"
 
 categories:
   - "oracle"
