@@ -1,3 +1,18 @@
+---
+title: "test"
+
+categories:
+  - "oracle"
+tags:
+  - "oracle"
+
+toc: true
+toc_sticky: true
+
+date: 2022-04-28
+last_modified_at: 2022-04-28
+---
+
 # Oracel 설치 및 DB작성법
 
 맨마지막 setup 관리자 권한 실행 -> 단일 인스턴스 데이터 베이스 생성 및 구성
