@@ -1,5 +1,5 @@
 ---
-title: "ch07_check_list"
+title: "7장 Check-list"
 
 categories:
   - "oracle"
@@ -13,19 +13,22 @@ date: 2022-04-29
 last_modified_at: 2022-04-29
 ---
 
-# 연습 문제
+# 7장 Check-list
 
 1. 계층형 쿼리 응용편에서 LISTAGG 함수를 사용해 다음과 같이 로우를 컬럼으로 분리했었다.
 
+```sql
 SELECT
 department_id,
 LISTAGG(emp_name, ',') WITHIN GROUP (ORDER BY emp_name) as empnames
 FROM employees
 WHERE department_id IS NOT NULL
 GROUP BY department_id;
+```
 
-1. LISTAGG 함수 대신 계층형 쿼리, 분석함수를 사용해서 위 쿼리와 동일한 결과를 산출하는 쿼리를 작성해 보자.
+- LISTAGG 함수 대신 계층형 쿼리, 분석함수를 사용해서 위 쿼리와 동일한 결과를 산출하는 쿼리를 작성해 보자.
 
+```sql
 <해설>
 SELECT department_id,
 SUBSTR(SYS_CONNECT_BY_PATH(emp_name, ','),2) empnames
@@ -39,13 +42,16 @@ WHERE rowseq = cnt
 START WITH rowseq = 1
 CONNECT BY PRIOR rowseq + 1 = rowseq
 AND PRIOR department_id = department_id;
+```
 
 1. 아래의 쿼리는 사원테이블에서 JOB_ID가 'SH_CLERK'인 사원을 조회하는 쿼리이다.
 
+```sql
 SELECT employee_id, emp_name, hire_date
 FROM employees
 WHERE job_id = 'SH_CLERK'
 ORDER By hire_date;
+```
 
 EMPLOYEE_ID EMP_NAME             HIRE_DATE
 
@@ -57,16 +63,16 @@ EMPLOYEE_ID EMP_NAME             HIRE_DATE
     185 Alexis Bull          2005/02/20 00:00:00
     193 Britney Everett      2005/03/03 00:00:00
     188 Kelly Chung          2005/06/14 00:00:00
+		....
+		....
+		199 Douglas Grant        2008/01/13 00:00:00
+		183 Girard Geoni         2008/02/03 00:00:00
 
 ```
 
-....
-....
-199 Douglas Grant        2008/01/13 00:00:00
-183 Girard Geoni         2008/02/03 00:00:00
-
-사원테이블에서 퇴사일자(retire_date)는 모두 비어있는데, 위 결과에서 사원번호가 184인 사원의 퇴사일자는 다음으로 입사일자가 빠른 192번 사원의 입사일자라고 가정해서
-다음과 같은 형태로 결과를 추출해낼 수 있도록 쿼리를 작성해 보자. (입사일자가 가장 최근인 183번 사원의 퇴사일자는 NULL이다)
+- 사원테이블에서 퇴사일자(retire_date)는 모두 비어있는데,
+- 위 결과에서 사원번호가 184인 사원의 퇴사일자는 다음으로 입사일자가 빠른 192번 사원의 입사일자라고 가정후,
+- 다음과 같은 형태로 결과를 추출해낼 수 있도록 쿼리를 작성해 보자. (입사일자가 가장 최근인 183번 사원의 퇴사일자는 NULL이다)
 
 EMPLOYEE_ID EMP_NAME             HIRE_DATE             RETIRE_DATE
 
@@ -78,22 +84,23 @@ EMPLOYEE_ID EMP_NAME             HIRE_DATE             RETIRE_DATE
     185 Alexis Bull          2005/02/20 00:00:00  2005/03/03 00:00:00
     193 Britney Everett      2005/03/03 00:00:00  2005/06/14 00:00:00
     188 Kelly Chung          2005/06/14 00:00:00  2005/08/13 00:00:00
+		....
+		....
+		199 Douglas Grant        2008/01/13 00:00:00  2008/02/03 00:00:00
+		183 Girard Geoni         2008/02/03 00:00:00
 
 ```
 
-....
-....
-199 Douglas Grant        2008/01/13 00:00:00  2008/02/03 00:00:00
-183 Girard Geoni         2008/02/03 00:00:00
-
+```sql
 <해설>
 SELECT employee_id, emp_name, hire_date,
 LEAD(hire_date) OVER ( PARTITION BY JOB_ID ORDER BY HIRE_DATE) AS retire_date
 FROM employees
 WHERE job_id = 'SH_CLERK'
 ORDER BY hire_date;
+```
 
-1. sales 테이블에는 판매데이터, customers 테이블에는 고객정보가 있다. 2001년 12월(SALES_MONTH = '200112') 판매데이터 중
+1. sales 테이블에는 판매데이터, customers 테이블에는 고객정보가 있다.  2001년 12월(SALES_MONTH = '200112') 판매데이터 중
 현재일자를 기준으로 고객의 나이(customers.cust_year_of_birth)를 계산해서 다음과 같이 연령대별 매출금액을 보여주는 쿼리를 작성해 보자.
 
 ---
@@ -104,6 +111,7 @@ ORDER BY hire_date;
 30대 ....
 40대 ....
 
+```sql
 <해설>
 WITH basis AS ( SELECT WIDTH_BUCKET(to_char(sysdate, 'yyyy') - b.cust_year_of_birth, 10, 90, 8) AS old_seg,
 TO_CHAR(SYSDATE, 'yyyy') - b.cust_year_of_birth as olds,
@@ -121,6 +129,7 @@ GROUP BY old_seg
 SELECT *
 FROM real_data
 ORDER BY old_segment;
+```
 
 1. 3번 문제를 이용해 월별로 판매금액이 가장 하위에 속하는 대륙 목록을 뽑아보자.
 ( 대륙목록은 countries 테이블의 country_region에 있으며, country_id 컬럼으로 customers 테이블과 조인을 해서 구한다.)
@@ -132,6 +141,7 @@ ORDER BY old_segment;
 199803 Oceania xxxxxx
 ...
 
+```sql
 <해설>
 WITH basis AS ( SELECT c.country_region, s.sales_month, SUM(s.amount_solD) AS amt
 FROM sales s,
@@ -150,6 +160,7 @@ FROM basis
 select *
 from real_data
 where ranks = 1;
+```
 
 1. 5장 연습문제 5번의 정답 결과를 이용해 다음과 같이 지역별, 대출종류별,
 월별 대출잔액과 지역별 파티션을 만들어 대출종류별 대출잔액의 퍼센트를 구하는 쿼리를 작성해보자.
@@ -163,6 +174,7 @@ where ranks = 1;
 ...
 ...
 
+```sql
 <해설>
 WITH basis AS (
 SELECT REGION, GUBUN,
@@ -198,3 +210,4 @@ AMT6 || '( ' || ROUND(RATIO_TO_REPORT(amt6) OVER ( PARTITION BY REGION ),2) * 10
 AMT7 || '( ' || ROUND(RATIO_TO_REPORT(amt7) OVER ( PARTITION BY REGION ),2) * 100 || '% )' AS "201311"
 FROM basis
 ORDER BY REGION;
+```
